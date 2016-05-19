@@ -16,7 +16,10 @@ py_library(
     name = "learn",
     srcs = glob([
         "python/learn/**/*.py",
-    ]) + ["__init__.py", "python/__init__.py"],
+    ]) + [
+        "__init__.py",
+        "python/__init__.py",
+    ],
     data = [":datasets"],
     srcs_version = "PY2AND3",
     deps = ["//tensorflow/python:framework"],
@@ -74,6 +77,29 @@ py_test(
     name = "test_estimators",
     size = "small",
     srcs = ["python/learn/tests/test_estimators.py"],
+    srcs_version = "PY2AND3",
+    deps = [
+        ":learn",
+        "//tensorflow:tensorflow_py",
+        "//tensorflow/python:framework_test_lib",
+    ],
+)
+
+py_test(
+    name = "tensor_signature_test",
+    srcs = ["python/learn/estimators/tensor_signature_test.py"],
+    srcs_version = "PY2AND3",
+    deps = [
+        ":learn",
+        "//tensorflow:tensorflow_py",
+        "//tensorflow/python:framework_test_lib",
+    ],
+)
+
+py_test(
+    name = "estimator_test",
+    size = "small",
+    srcs = ["python/learn/estimators/estimator_test.py"],
     srcs_version = "PY2AND3",
     deps = [
         ":learn",
@@ -223,6 +249,43 @@ py_test(
         ":learn",
         "//tensorflow:tensorflow_py",
         "//tensorflow/python:framework_test_lib",
+    ],
+)
+
+py_test(
+    name = "checkpoints_test",
+    size = "small",
+    srcs = ["python/learn/utils/checkpoints_test.py"],
+    srcs_version = "PY2AND3",
+    deps = [
+        ":learn",
+        "//tensorflow:tensorflow_py",
+        "//tensorflow/python:framework",
+        "//tensorflow/python:framework_test_lib",
+    ],
+)
+
+py_test(
+    name = "graph_io_test",
+    size = "small",
+    srcs = ["python/learn/io/graph_io_test.py"],
+    srcs_version = "PY2AND3",
+    deps = [
+        ":learn",
+        "//tensorflow:tensorflow_py",
+        "//tensorflow/python:framework",
+        "//tensorflow/python:framework_test_lib",
+    ],
+)
+
+py_binary(
+    name = "inspect_checkpoint",
+    srcs = [
+        "python/learn/utils/inspect_checkpoint.py",
+    ],
+    srcs_version = "PY2AND3",
+    deps = [
+        "//tensorflow:tensorflow_py",
     ],
 )
 
